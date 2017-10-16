@@ -30,6 +30,7 @@ create table chaside_estudiante(
   id integer not null auto_increment,
   estudiante_id integer not null,
   chaside_id integer not null,
+  resp enum('Y', 'N'),
   primary key(id),
   foreign key(estudiante_id)
   references estudiante(id)

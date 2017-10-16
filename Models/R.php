@@ -15,9 +15,10 @@ class R
     $data['content'] = 'No se reconocen los campos: '.implode('|', $dat);
     return $data;
   }
-  public static function success($content)
+  public static function success($message, $content)
   {
     $data['status'] = "success";
+    $data['message'] = $message;
     $data['content'] = $content;
     return $data;
   }
