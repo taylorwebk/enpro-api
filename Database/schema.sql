@@ -26,11 +26,11 @@ create table estudiante(
   references reschaside(id)
   on delete cascade
 );
+-- solo se guarda las repuestas positivas
 create table chaside_estudiante(
   id integer not null auto_increment,
   estudiante_id integer not null,
   chaside_id integer not null,
-  resp enum('Y', 'N'),
   primary key(id),
   foreign key(estudiante_id)
   references estudiante(id)
