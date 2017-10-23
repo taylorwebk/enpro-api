@@ -1,22 +1,12 @@
 <?php
 namespace Models;
 use Illuminate\Database\Eloquent\Model as Model;
-/**
- *
- */
-class Estudiante extends Model
+
+class Admin extends Model
 {
   protected $guarded = array();
-  protected $table = 'estudiante';
+  protected $table = 'admin';
   public $timestamps = false;
-  public function intereseschaside()
-  {
-    return $this->belongsTo('Models\Intereseschaside');
-  }
-  public function aptitudeschaside()
-  {
-    return $this->belongsTo('Models\Aptitudeschaside');
-  }
   //
   // public function estudiantes()
   // {

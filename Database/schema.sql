@@ -5,11 +5,24 @@ create table chaside(
   preg varchar(256),
   primary key(id)
 );
-create table reschaside(
+create table admin(
+  id integer not null auto_increment,
+  chaside boolean default 0,
+  kuder boolean default 0,
+  fmod datetime,
+  primary key(id)
+);
+create table intereseschaside(
   id integer not null auto_increment,
   letra char(1),
   nombre varchar(128),
   intereses varchar(256),
+  primary key(id)
+);
+create table aptitudeschaside(
+  id integer not null auto_increment,
+  letra char(1),
+  nombre varchar(128),
   aptitudes varchar(256),
   primary key(id)
 );
@@ -20,10 +33,14 @@ create table estudiante(
   colegio varchar(256),
   fnac date,
   username varchar(128) unique,
-  reschaside_id integer null,
+  intereseschaside_id integer null,
+  aptitudeschaside_id integer null,
   primary key(id),
-  foreign key(reschaside_id)
-  references reschaside(id)
+  foreign key(intereseschaside_id)
+  references intereseschaside(id)
+  on delete cascade,
+  foreign key(aptitudeschaside_id)
+  references aptitudeschaside(id)
   on delete cascade
 );
 -- solo se guarda las repuestas positivas
@@ -40,26 +57,39 @@ create table chaside_estudiante(
   on delete cascade
 );
 
-insert into reschaside values(null, 'C', 'Administrativas y Contables',
-'Organización,Supervisión,Orden,Análisis y síntesis,Colaboración,Cálculo',
+insert into intereseschaside values(null, 'C', 'Administrativas y Contables',
+'Organización,Supervisión,Orden,Análisis y síntesis,Colaboración,Cálculo');
+insert into aptitudeschaside values(null, 'C', 'Administrativas y Contables',
 'Persuasivo,Objetivo,Práctico,Tolerante,Responsable,Ambicioso');
-insert into reschaside values(null, 'H', 'Humanísticas y Sociales',
-'Precisión Verbal,Organización,Relación de Hechos,Lingüística,Orden,Justicia',
-'Responsable,Justo,Conciliador,Persuasivo,Sagaz,Imaginativo');
-insert into reschaside values(null, 'A', 'Artísticas',
-'Estética,Lo Armónico,Lo Manual,Lo Visual,Lo Auditivo',
+
+insert into intereseschaside values(null, 'H', 'Humanísticas y Sociales',
+'Precisión Verbal,Organización,Relación de Hechos,Lingüística,Orden,Justicia');
+insert into aptitudeschaside values(null, 'H', 'Humanísticas y Sociales',
+'Precisión Verbal,Organización,Relación de Hechos,Lingüística,Orden,Justicia');
+
+insert into intereseschaside values(null, 'A', 'Artísticas',
+'Estética,Lo Armónico,Lo Manual,Lo Visual,Lo Auditivo');
+insert into aptitudeschaside values(null, 'A', 'Artísticas',
 'Sensible,Imaginativo,Creativo,Detallista,Innovador,Intuitivo');
-insert into reschaside values(null, 'S', 'Medicina y Ciencias de la Salud',
-'Asistir,Investigar,Precisión,Analítico,Ayudar',
+
+insert into intereseschaside values(null, 'S', 'Medicina y Ciencias de la Salud',
+'Asistir,Investigar,Precisión,Analítico,Ayudar');
+insert into aptitudeschaside values(null, 'S', 'Medicina y Ciencias de la Salud',
 'Altruista,Solidario,Paciente,Comprensivo,Respetuoso,Persuasivo');
-insert into reschaside values(null, 'I', 'Ingeniería y Computación',
-'Cálculo,Científico,Manual,Exacto,Planificar',
+
+insert into intereseschaside values(null, 'I', 'Ingeniería y Computación',
+'Cálculo,Científico,Manual,Exacto,Planificar');
+insert into aptitudeschaside values(null, 'I', 'Ingeniería y Computación',
 'Preciso,Práctico,Crítico,Analítico,Rígido');
-insert into reschaside values(null, 'D', 'Defensa y Seguridad',
-'Justicia,Equidad,Colaboración,Espíritu de Equipo,Liderazgo',
+
+insert into intereseschaside values(null, 'D', 'Defensa y Seguridad',
+'Justicia,Equidad,Colaboración,Espíritu de Equipo,Liderazgo');
+insert into aptitudeschaside values(null, 'D', 'Defensa y Seguridad',
 'Arriesgado,Solidario,Valiente,Agresivo,Persuasivo');
-insert into reschaside values(null, 'E', 'Ciencias Exactas y Agrarias',
-'Investigación,Orden,Organización,Análisis y Síntesis,Numérico,Clasificar',
+
+insert into intereseschaside values(null, 'E', 'Ciencias Exactas y Agrarias',
+'Investigación,Orden,Organización,Análisis y Síntesis,Numérico,Clasificar');
+insert into aptitudeschaside values(null, 'E', 'Ciencias Exactas y Agrarias',
 'Metódico,Analítico,Obervador,Introvertido,Paciente,Seguro');
 
 insert into chaside values(null, '¿Aceptarías trabajar escribiendo artículos en la sección económica de un diario?');

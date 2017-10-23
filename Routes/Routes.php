@@ -11,6 +11,20 @@ $app->post('/registrar', function (Request $req, Response $res)
   $result = MC::add($req->getParsedBody());
   return $res->withJson($result);
 });
+$app->post('/chaside', function (Request $req, Response $res)
+{
+  $result = MC::getChaside($req->getParsedBody());
+  return $res->withJson($result);
+});
+$app->post('/ingresar', function (Request $req, Response $res)
+{
+  $result = MC::login($req->getParsedBody());
+  return $res->withJson($result);
+});
+$app->post('/enviarchaside', function (Request $req, Response $res)
+{
+  return $res->withJson(MC::postAnswers($req->getParsedBody()));
+});
 $app->get('/preguntas', function (Request $req, Response $res)
 {
   return $res->withJson(MC::getQuestions());
