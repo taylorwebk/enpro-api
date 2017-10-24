@@ -36,8 +36,9 @@ class MainController
     if (R::validateData($data, ['username'])) {
       $status = Admin::orderBy('id', 'desc')->first();
       $est = Estudiante::where('username', $data['username'])->first();
+      // return $est->intereseschaside_id;
       if ($est) {
-        if ($est->intereseschaside_id == 'null') {
+        if (!$est->intereseschaside_id) {
           if ($status->chaside) {
             return R::success('Preguntas obtenidas.', Chaside::all());
           } else {
