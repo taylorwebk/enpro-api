@@ -17,6 +17,44 @@ create table admin(
   fmod datetime,
   primary key(id)
 );
+create table kuderdesc(
+  id integer not null auto_increment,
+  cod integer,
+  nombre varchar(128),
+  cont text,
+  primary key(id)
+);
+create table kudercar(
+  id integer not null auto_increment,
+  cod varchar(4),
+  nombre varchar(256),
+  carreras varchar(512),
+  primary key(id)
+);
+create table estudiante_kuderdesc(
+  estudiante_id integer not null,
+  kuderdesc_id integer not null,
+  percentil integer,
+  primary key(estudiante_id, kuderdesc_id),
+  foreign key(estudiante_id)
+  references estudiante(id)
+  on delete cascade,
+  foreign key(kuderdesc_id)
+  references kuderdesc(id)
+  on delete cascade
+);
+create table estudiante_kudercar(
+  estudiante_id integer not null,
+  kudercar_id integer not null,
+  primary key(estudiante_id, kudercar_id),
+  foreign key(estudiante_id)
+  references estudiante(id)
+  on delete cascade,
+  foreign key(kudercar_id)
+  references kudercar(id)
+  on delete cascade
+);
+
 create table intereseschaside(
   id integer not null auto_increment,
   letra char(1),
@@ -38,6 +76,7 @@ create table estudiante(
   colegio varchar(256),
   fnac date,
   username varchar(128) unique,
+  sexo boolean,
   intereseschaside_id integer null,
   aptitudeschaside_id integer null,
   primary key(id),
@@ -61,6 +100,315 @@ create table chaside_estudiante(
   references chaside(id)
   on delete cascade
 );
+
+insert into kuderdesc values(
+  null,
+  0,
+  'Actividad al Aire Libre',
+  ' a ti te gusta pasar la mayor parte del tiempo en el campo, en los bosques o en el mar. Te agrada cultivar plantas o cuidar a los animales, etc. En cambio, tus resultados dicen que no te sentirás muy a gusto en una fábrica, en un laboratorio o en una oficina.'
+);
+insert into kuderdesc values(
+  null,
+  1,
+  'Interés Mecánico',
+  ' tu pérfil indica interés para trabajar con máquinas y herramientas, construir o arreglar objetos mecánicos, artefactos eléctricos, muebles, etc.'
+);
+insert into kuderdesc values(
+  null,
+  2,
+  'Interés para el Cálculo',
+  ' te encanta trabajar con números, resolver problemas numéricos, aplicar fórmulas, resolver series.'
+);
+insert into kuderdesc values(
+  null,
+  3,
+  'Interés Científico',
+  ' encuentras placer en investigar la razón de los hechos o de las cosas, en descubrir sus causas y en resolver problemas de distinta índole, sin duda gracias a personas como tú se hace posible el progreso de la ciencia.'
+);
+insert into kuderdesc values(
+  null,
+  4,
+  'Interés Persuasivo',
+  ' a ti te gusta tratar con personas, te agrada compartir e imponer tus puntos de vista, convencer a los demás, vender artículos, etc.'
+);
+insert into kuderdesc values(
+  null,
+  5,
+  'Interés Artístico Plástico',
+  ' eres de aquellas personas a quienes les gusta hacer trabajos de creación tipo manual, usando combinaciones de colores, materiales, formas y diseños.'
+);
+insert into kuderdesc values(
+  null,
+  6,
+  'Interés Literario',
+  ' eres de las personas a las que les gusta la lectura y encuentran placer en expresar sus ideas en forma oral o escrita.'
+);
+insert into kuderdesc values(
+  null,
+  7,
+  'Interés Musical',
+  ' tu pérfil denota un marcado gusto para tocar instrumentos musicales, cantar, bailar, leer sobre música, estudiar la vida de destacados compositores, asistir a conciertos, etc.'
+);
+insert into kuderdesc values(
+  null,
+  8,
+  'Interés por el Servicio Social',
+  ' presentas un gran interés para servir a los demás, teniendo como prioridad a los necesitados, a los enfermos, a los niños y a los ancianos.'
+);
+insert into kuderdesc values(
+  null,
+  9,
+  'Interés en el Trabajo de Oficina',
+  ' te gusta todo tipo de trabajos de escritorio, manejar archivos, agendar actividades, trabajos que requieren exactitud y precisión.'
+);
+
+insert into kudercar values(
+  null,
+  '0',
+  'Trabajo al Aire Libre',
+  'Ciencias del Mar,Ecología,Geología,Ingeniería Agronómica,Ingeniería Forestal,Ingeniería de Minas,Ejército,Policia,Profesor de Ecucación Física'
+);
+insert into kudercar values(
+  null,
+  '1',
+  'Mecánico',
+  'Aviación,Electromecánica,Física,Ingeniería Civil,Ingeniería Eléctrica,Ingeniería Industrial,Ingeniería Mecánica,Ingeniería Metalúrgica,Ingeniería Química,Mecánica Automotriz,Mecánica Industrial'
+);
+insert into kudercar values(
+  null,
+  '2',
+  'Cálculo',
+  'Contaduría Pública,Auditoría,Economía,Estadística,Ingeniería en Sistemas,Profesor de Matemáticas,Informática'
+);
+insert into kudercar values(
+  null,
+  '3',
+  'Científico',
+  'Antropología,Arqueología,Astronomía,Biología,Ingeniería Electrónica,Ingeniería de Alimentos,Medicina,Cirugía,Veterinaria,Odontología,Psicología,Química,Química Farmacéutica,Sociología,Técnicos de Laboratorios'
+);
+insert into kudercar values(
+  null,
+  '4',
+  'Persuasivo',
+  'Agentes de Publicidad,Comunicación Social,Escritores,Marketing,Derecho,Abogados,Maestros,Personal de Ventas'
+);
+insert into kudercar values(
+  null,
+  '5',
+  'Artístico Plástico',
+  'Arquitectura,Decoración de Interiores,Pintura,Marketing y Diseño'
+);
+insert into kudercar values(
+  null,
+  '6',
+  'Literario',
+  'Bibliotecología,Profesor de filosofía,Profesor de Literatura,Escritores,Periodismo,Derecho'
+);
+insert into kudercar values(
+  null,
+  '7',
+  'Musical',
+  'Actuación,Compositor Musical,Directores de Orquesta,Músicos,Profesores de Música'
+);
+insert into kudercar values(
+  null,
+  '8',
+  'Servicio Social',
+  'Bibliotecología,Enfermería,Medicina,Cirugía,Odontología,Pedagogía,Psicología,Trabajo Social,Sacerdote'
+);
+insert into kudercar values(
+  null,
+  '9',
+  'Trabajo de Oficina',
+  'Archivista,Cajeros,Contadores,Mecanografía,Secretaría Ejecutiva,Secretarias'
+);
+insert into kudercar values(
+  null,
+  '01',
+  'Aire Libre - Mecánico',
+  'Ingeniería Agronómica(Esp. Maquinaría Agrícola),Ingeniería Civil(Esp. Hidráulica),Ingeniería Civil(Esp. Vías de Comunicación),Ingeniería de Minas,Ingeniería Petrolera,Topógrafos'
+);
+insert into kudercar values(
+  null,
+  '02',
+  'Aire Libre - Cálculo',
+  'Ingeniería Agronómica(Esp. Economía),Ingeniería Agronómica(Esp. Estadística)'
+);
+insert into kudercar values(
+  null,
+  '03',
+  'Aire Libre - Científico',
+  'Antropología,Arqueología,Geología,Ingeniería Agronómica(Esp. Parasitología),Ingeniería Forestal,Médicos Veterinarios'
+);
+insert into kudercar values(
+  null,
+  '08',
+  'Aire Libre - Servicio Social',
+  'Profesor de Educación Física, Trabajo Social'
+);
+insert into kudercar values(
+  null,
+  '12',
+  'Mecánico - Cálculo',
+  'Ingeniería Civil,Ingeniería Mecánica'
+);
+insert into kudercar values(
+  null,
+  '13',
+  'Mecánico - Científico',
+  'Fisioterapeuta,Geología,Ingeniería Civil,Ingeniería de minas,Ingeniería Industrial,Ingeniería Mecánica,Ingeniería Química'
+);
+insert into kudercar values(
+  null,
+  '14',
+  'Mecánico - Persuasivo',
+  'Ingeniería Industrial,Mercadotecnia'
+);
+insert into kudercar values(
+  null,
+  '15',
+  'Mecánico - Artístico',
+  'Arquitectura,Decoración de Interiores,Dibujantes Publicitarios,Profesores de Artes Manuales'
+);
+insert into kudercar values(
+  null,
+  '17',
+  'Mecánico - Musical',
+  'Ingenieros de sonido'
+);
+insert into kudercar values(
+  null,
+  '18',
+  'Mécanico - Servicio Social',
+  'Profesor de materias técnicas'
+);
+insert into kudercar values(
+  null,
+  '23',
+  'Cálculo - Científico',
+  'Astronomía,Economía,Física,Ingeniería Civil,Ingeniería Industrial,Ingeniería Mecánica,Ingeniería Eléctrica,Ingeniería Química,Matemática,Química,Profesor de Matemática'
+);
+insert into kudercar values(
+  null,
+  '24',
+  'Cálculo - Persuasivo',
+  'Economía'
+);
+insert into kudercar values(
+  null,
+  '25',
+  'Cálculo - Artístico-Plástico',
+  'Arquitectura,Ingeniería Civil'
+);
+insert into kudercar values(
+  null,
+  '28',
+  'Cálculo - Servicio Social',
+  'Economía,Profesor de Matemática,Profesores de Materias Exactas'
+);
+insert into kudercar values(
+  null,
+  '29',
+  'Cálculo - Trabajo de oficina',
+  'Contaduría,Bibliotecología'
+);
+insert into kudercar values(
+  null,
+  '34',
+  'Científico - Persuasivo',
+  'Farmacéutica,Ingeniería Industrial,Profesores de Ciencias'
+);
+insert into kudercar values(
+  null,
+  '35',
+  'Científico - Artístico-Plástico',
+  'Arquitectura,Médico Cirujano,Odontología'
+);
+insert into kudercar values(
+  null,
+  '36',
+  'Científico - Literario',
+  'Medicina,Psicología'
+);
+insert into kudercar values(
+  null,
+  '37',
+  'Científico - Musical',
+  'Ingeniería en Sonido'
+);
+insert into kudercar values(
+  null,
+  '38',
+  'Científico - Servicio Social',
+  'Consejeros Vocacionales,Medicina,Nutricionista,Odontología,Profesor de Ciencias'
+);
+insert into kudercar values(
+  null,
+  '45',
+  'Persuasivo - Artístico-Plástico',
+  'Decorador de Interiores,Dibujante Publicitario'
+);
+insert into kudercar values(
+  null,
+  '46',
+  'Persuasivo - Literario',
+  'Escritor,Derecho,Periodismo,Profesor de Literatura'
+);
+insert into kudercar values(
+  null,
+  '47',
+  'Persuasivo - Musical',
+  'Actuación,Director de Orquesta,Profesor de Canto,Profesor de Música'
+);
+insert into kudercar values(
+  null,
+  '48',
+  'Persuasivo - Servicio Social',
+  'Comunicación Social,Consejero Vocacional,Pedagogía,Trabajo Social'
+);
+insert into kudercar values(
+  null,
+  '56',
+  'Artístico-Plástico - Literario',
+  'Actuación,Escritor'
+);
+insert into kudercar values(
+  null,
+  '58',
+  'Artístico Plástico - Servicio Social',
+  'Profesor de Artes Manuales'
+);
+insert into kudercar values(
+  null,
+  '67',
+  'Literario - Musical',
+  'Actuación,Profesor de Música'
+);
+insert into kudercar values(
+  null,
+  '68',
+  'Literario - Servicio social',
+  'Escritor,Periodismo,Profesor de Ciencias Sociales,Profesor de Filosofía,Trabajo Social'
+);
+insert into kudercar values(
+  null,
+  '69',
+  'Literario - Trabajo de Oficina',
+  'Bibliotecología,Secretaría'
+);
+insert into kudercar values(
+  null,
+  '78',
+  'Musical - Servicio Social',
+  'Músico, Profesor de Música,Baile'
+);
+insert into kudercar values(
+  null,
+  '89',
+  'Servicio Social - Trabajo de Oficina',
+  'Profesor'
+);
+
 
 insert into intereseschaside values(null, 'C', 'Administrativas y Contables',
 'Organización,Supervisión,Orden,Análisis y síntesis,Colaboración,Cálculo');

@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 use \Models\Chaside;
+use \Models\Kuder;
 use \Models\Estudiante;
 use \Models\Admin;
 use \Models\Intereseschaside;
@@ -11,25 +12,54 @@ class MainController
 {
   public static function add($data)
   {
-    $fields = ['nombres', 'apellidos', 'colegio', 'fnac'];
+    $fields = ['nombres', 'apellidos', 'colegio', 'fnac', 'sexo'];
     if (R::validateData($data, $fields)) {
       if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $data['fnac'])) {
-        $username = self::generateUsername($data['nombres'], $data['apellidos']);
-        Estudiante::create([
-          'id' => null,
-          'nombres' => $data['nombres'],
-          'apellidos' => $data['apellidos'],
-          'colegio' => $data['colegio'],
-          'fnac' => $data['fnac'],
-          'username' => $username
-        ]);
-        return R::success('Se creo el usuario.', $username);
+        if ($data['sexo'] == 1 || $data['sexo'] == 0) {
+          $username = self::generateUsername($data['nombres'], $data['apellidos']);
+          Estudiante::create([
+            'id' => null,
+            'nombres' => $data['nombres'],
+            'apellidos' => $data['apellidos'],
+            'colegio' => $data['colegio'],
+            'fnac' => $data['fnac'],
+            'username' => $username,
+            'sexo' => $data['sexo']
+          ]);
+          return R::success('Se creo el usuario.', $username);
+        } else {
+          return R::error('El campo sexo solo puede ser 1 o 0, se obtuvo: '.$data['sexo']);
+        }
+
       } else {
         return R::error('El formato de fecha debe ser: YYYY-MM-DD (ej. 2015-02-22), usted ingreso: '.$data['fnac']);
       }
     } else {
       return R::errorData($fields);
     }
+  }
+  public static function getKuder($data)
+  {
+    if (R::validateData($data, ['username'])) {
+      $status = Admin::orderBy('id', 'desc')->first();
+      $est = Estudiante::where('username', $data['username'])->first();
+      if ($est) {
+        if (count($est->kuderdesc)) {
+          return R::warning('Usted ya hizo el test Kuder');
+        } else {
+          if ($status->kuder) {
+            return R::success('Preguntas Obtenidas', Kuder::all());
+          } else {
+            return R::warning('El test KUDER aún no fue habilitado.');
+          }
+        }
+      } else {
+        return R::warning('No existe el estudiante con username: '.$data['username']);
+      }
+    } else {
+      return R::error('No se reconoce el campo username');
+    }
+
   }
   public static function getChaside($data)
   {
@@ -58,7 +88,7 @@ class MainController
   public static function login($data)
   {
     if (R::validateData($data, ['username'])) {
-      $est = Estudiante::with(['intereseschaside', 'aptitudeschaside'])->where('username', $data['username'])->first();
+      $est = Estudiante::with(['intereseschaside', 'aptitudeschaside', 'kuderdesc', 'kudercar'])->where('username', $data['username'])->first();
       if ($est) {
         return R::success('Estudiante registrado', $est);
       } else {

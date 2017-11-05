@@ -17,6 +17,14 @@ class Estudiante extends Model
   {
     return $this->belongsTo('Models\Aptitudeschaside');
   }
+  public function kudercar()
+  {
+    return $this->belongsToMany('Models\Kudercar');
+  }
+  public function kuderdesc()
+  {
+    return $this->belongsToMany('Models\Kuderdesc');
+  }
   //
   // public function estudiantes()
   // {

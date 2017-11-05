@@ -16,6 +16,10 @@ $app->post('/chaside', function (Request $req, Response $res)
   $result = MC::getChaside($req->getParsedBody());
   return $res->withJson($result);
 });
+$app->post('/kuder', function (Request $req, Response $res)
+{
+  return $res->withJson(MC::getKuder($req->getParsedBody()));
+});
 $app->post('/ingresar', function (Request $req, Response $res)
 {
   $result = MC::login($req->getParsedBody());
