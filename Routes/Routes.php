@@ -27,7 +27,11 @@ $app->post('/ingresar', function (Request $req, Response $res)
 });
 $app->post('/enviarchaside', function (Request $req, Response $res)
 {
-  return $res->withJson(MC::postAnswers($req->getParsedBody()));
+  return $res->withJson(MC::postAnswersChaside($req->getParsedBody()));
+});
+$app->post('/enviarkuder', function (Request $req, Response $res)
+{
+  return $res->withJson(MC::postAnswersKuder($req->getParsedBody()));
 });
 $app->get('/preguntas', function (Request $req, Response $res)
 {

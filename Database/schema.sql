@@ -31,30 +31,6 @@ create table kudercar(
   carreras varchar(512),
   primary key(id)
 );
-create table estudiante_kuderdesc(
-  estudiante_id integer not null,
-  kuderdesc_id integer not null,
-  percentil integer,
-  primary key(estudiante_id, kuderdesc_id),
-  foreign key(estudiante_id)
-  references estudiante(id)
-  on delete cascade,
-  foreign key(kuderdesc_id)
-  references kuderdesc(id)
-  on delete cascade
-);
-create table estudiante_kudercar(
-  estudiante_id integer not null,
-  kudercar_id integer not null,
-  primary key(estudiante_id, kudercar_id),
-  foreign key(estudiante_id)
-  references estudiante(id)
-  on delete cascade,
-  foreign key(kudercar_id)
-  references kudercar(id)
-  on delete cascade
-);
-
 create table intereseschaside(
   id integer not null auto_increment,
   letra char(1),
@@ -85,6 +61,29 @@ create table estudiante(
   on delete cascade,
   foreign key(aptitudeschaside_id)
   references aptitudeschaside(id)
+  on delete cascade
+);
+create table estudiante_kuderdesc(
+  estudiante_id integer not null,
+  kuderdesc_id integer not null,
+  percentil integer,
+  primary key(estudiante_id, kuderdesc_id),
+  foreign key(estudiante_id)
+  references estudiante(id)
+  on delete cascade,
+  foreign key(kuderdesc_id)
+  references kuderdesc(id)
+  on delete cascade
+);
+create table estudiante_kudercar(
+  estudiante_id integer not null,
+  kudercar_id integer not null,
+  primary key(estudiante_id, kudercar_id),
+  foreign key(estudiante_id)
+  references estudiante(id)
+  on delete cascade,
+  foreign key(kudercar_id)
+  references kudercar(id)
   on delete cascade
 );
 -- solo se guarda las repuestas positivas
