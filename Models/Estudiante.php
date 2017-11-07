@@ -23,7 +23,7 @@ class Estudiante extends Model
   }
   public function kuderdesc()
   {
-    return $this->belongsToMany('Models\Kuderdesc');
+    return $this->belongsToMany('Models\Kuderdesc')->withPivot('percentil');
   }
   //
   // public function estudiantes()

@@ -200,17 +200,19 @@ class MainController
             );
           }
           $percentil = self::generatePercentil($points, $est->sexo);
-          self::getIndex($percentil);
+          $final = self::getIndex($percentil);
+          // return $final;
+          foreach ($final as $key => $val) {
+            $est->kuderdesc()->attach($key + 1, ['percentil' => $val]);
+            $est->kudercar()->attach($key + 1);
+          }
           $verification = count(
             array_merge(
               array_values(array_intersect($si['v'], $data['si'])),
               array_values(array_intersect($no['v'], $data['no']))
             )
           );
-          return array(
-            'verificacion' => $verification,
-            'results' => $percentil
-          );
+          return R::success('Felicidades, finalizó el test Kuder, puede ver los resultados en su pérfil.', $verification);
         } else {
           return R::error('No existe el estudiante con username: '.$data['username']);
         }
